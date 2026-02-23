@@ -17,12 +17,13 @@ I wrote this because I was lazy to fill forms.
 
 ---
 
+## IMPORTANT
+Paw Paw does not proxy or store your data, files, urls, tokens used on the chrome extension. The source code is shared here.
+
+
 ## Why You Must Use Your Own OpenAI API Key
 To ensure that the files you upload are ONLY going to your account.
 The key is stored in session only and must be re-entered when the browser session ends.
-
-
-Paw Paw does not proxy or store your data.
 
 You provide your own OpenAI API key so:
 - Your data goes directly from your browser to OpenAI  
@@ -32,7 +33,6 @@ You provide your own OpenAI API key so:
 
 
 ---
-
 ## How to Get an OpenAI API Key
 1. Go to https://platform.openai.com/  
 2. Sign in or create an account  
@@ -43,10 +43,8 @@ You are responsible for your own OpenAI usage charges.
 
 ---
 ## Supported File Types
-- PDF (.pdf)  
-- Microsoft Word (.doc)  
-- Microsoft Word (.docx)
-- 
+PDF (.pdf), Microsoft Word (.doc) and Microsoft Word (.docx)
+ 
 The document is analyzed and mapped to detected form fields on the current page.
 ---
 
@@ -82,8 +80,8 @@ No external backend server is used.
 ---
 
 ## Intended Use
-
 Best suited for:
+- Lazy people like me
 - Job applications  
 - Profile forms  
 - Registration pages  
@@ -98,8 +96,7 @@ Users are responsible for:
 - API key security  
 - API usage costs  
 - Reviewing generated content before submission  
-
-Always verify filled forms before submitting.
+- Always verifying information on filled forms before submission.
 
 ## License
 This project is licensed under the GNU General Public License v3.0 (GPL‑3.0).
