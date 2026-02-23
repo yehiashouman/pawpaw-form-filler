@@ -1,0 +1,23 @@
+{
+  "name": "Paw Paw - Form filler powered by OpenAI",
+  "description": "One-click form filler powered by OpenAI. Uses your own API key for privacy. Best for simple web forms.",
+  "version": "1.0.0",
+  "author": "www.yehiashouman.com",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": { "default_popup": "popup.html" },
+"permissions": ["activeTab", "tabs", "scripting", "storage"],
+  "host_permissions": ["https://api.openai.com/*"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

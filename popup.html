@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!--
+      Popup UI for the extension.
+      Notes:
+      - Keep CSS self-contained (no external frameworks assumed in the popup).
+      - Avoid hard-coding secrets (API keys) in the HTML.
+    -->
+    <style>
+      /* Root container (if you later mount a JS framework into #app). */
+      #app {
+        height: 100%;
+        display:block;
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+      }
+
+      /* Custom display font used in the header branding. */
+      @font-face {
+          font-family: 'LazyDog';
+          src: url('fonts/lazy_dog.ttf') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+      }
+
+      /*
+        Popup sizing:
+        - Width is fixed so the layout is stable in the browser action.
+        - Height is content-driven.
+      */
+      body {
+        font-family: Arial, sans-serif;
+        width: 360px;
+        height:auto;
+        overflow-y:visible;
+        margin: 0;
+        padding: 0;
+        background: #f9f9f9;
+      }
+
+      .header {
+        /* Branding header */
+        background: #111827;
+        color: #ffffff;
+        padding: 5px;
+        
+        text-align: center;
+      }
+
+      .logo {
+        width: 48px;
+        height: 48px;
+        vertical-align:top;
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+
+      .title {
+        font-family: 'LazyDog', Arial, sans-serif;
+        font-size: 36px;
+        font-weight: 600;
+        display: inline-block;
+        margin-left: 5px;
+        padding-top: 10px;
+      }
+      .slogan {
+        font-family: 'LazyDog', Arial, sans-serif;
+        font-size: 15px;
+        margin-top: 4px;
+      }
+      .description {
+        font-family: sans-serif;
+        font-size: 12px;
+        margin-top: 6px;
+      }
+      .footer,.footer a{
+        /* Simple footer link; keep small and unobtrusive */
+        font-family: Arial, sans-serif;
+        font-size: 10px;
+        margin-top: 14px;
+        color: #FF9900;
+        width:100%;
+        text-align:right;
+        border-top:1px solid #ffDD00;
+        padding-top:10px;
+      }
+      .container {
+        /* Main content padding */
+        padding: 14px;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+
+      input, button {
+        /* Ensure inputs/buttons fill popup width consistently */
+        width: 100%;
+        box-sizing: border-box;
+        margin-top: 6px;
+      }
+
+      button {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      small {
+        color: #666;
+        display: block;
+        margin-top: 8px;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        font-size: 11px;
+        background: #f1f1f1;
+        padding: 8px;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header: logo + title + short description -->
+    <div class="header">
+      <img src="icons/icon128.png" class="logo" />
+      <div class="title">Paw Paw</div>
+      <div class="slogan">Puppy Fill Form Now</div>
+      <div class="description">
+        Upload your document and populate form fields using your own OpenAI API key (session only).
+      </div>
+      <div class="footer"><a href="https://www.yehiashouman.com" target="_blank">www.yehiashouman.com</a></div>
+    </div>
+
+    <!-- Main form controls -->
+    <div class="container">
+      <label>OpenAI API Key (session only)</label>
+      <!-- Do NOT set a default value here; never ship or commit API keys. -->
+      <input id="apiKey" type="password" placeholder="sk-..." value="" />
+      <small>Your key is not saved. You must re-enter it next time (You can get it from https://platform.openai.com/).</small>
+
+      <label>Document (.pdf, .doc, .docx)</label>
+      <!-- File picker: limit to supported formats to reduce parsing errors. -->
+      <input id="docFile" type="file" accept=".pdf,.doc,.docx" />
+
+      <label>Optional extra instruction</label>
+      <!-- Free-form instructions that get appended to the analysis prompt. -->
+<textarea id="userRules" type="text" style="width:100%;height:150px;"  placeholder="e.g., do not guess missing values">
+Rules:
+1) Try to fill all fields if possible but prioritize accuracy over quantity.
+2) Answer all questions with professional answers. Do not leave any question unanswered. If you don't know the answer, make the best guess based on the document. 
+</textarea>
+
+      <!-- Primary action: analyze the currently-open page and attempt to fill fields. -->
+      <button id="analyzeFill">Analyze & Fill Current Page</button>
+
+      <!-- Status panel: popup.js writes progress/errors here. -->
+      <small>Status</small>
+      <pre id="status"></pre>
+    </div>
+
+    <!-- Popup controller script -->
+    <script src="popup.js"></script>
+  </body>
+</html>
